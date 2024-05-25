@@ -2,6 +2,16 @@ const fs = require("fs");
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
+const checkID = (req, res, next, val) => {
+  console.log("tour id is : ", val);
+
+  const id = Number(val);
+  const tour = tours.find((el) => el.id === id);
+  if (!tour)
+    return res.status(404).json({ status: "fail", message: "invalid id" });
+
+  next();
+};
 const getAllTours = (req, res) => {
   //! middleware
   console.log(req.requestTime);
@@ -20,7 +30,6 @@ const getTour = (req, res) => {
   console.log(req.params);
   const id = Number(req.params.id);
   const tour = tours.find((el) => el.id === id);
-  if (!tour) return res.status(404).json({ message: "No tour found" });
   res.status(200).json({
     status: "success",
     requestedAt: req.requestTime,
@@ -58,7 +67,6 @@ const updateTour = (req, res) => {
   const id = Number(req.params.id);
   const tour = tours.find((el) => el.id === id);
   const tourIndex = tours.findIndex((el) => el.id === id);
-  if (!tour) return res.status(404).json({ message: "No tour found" });
   const updatedTour = { ...tours[tourIndex], ...req.body };
   tours[tourIndex] = updatedTour;
   fs.writeFile(
@@ -85,7 +93,7 @@ const deleteTour = (req, res) => {
   const id = Number(req.params.id);
   const tour = tours.find((el) => el.id === id);
   const tourIndex = tours.findIndex((el) => el.id === id);
-  if (!tour) return res.status(404).json({ message: "No tour found" });
+
   tours.splice(tourIndex, 1);
   fs.writeFile(
     `${__dirname}/dev-data/data/tours-simple.json`,
@@ -109,4 +117,5 @@ module.exports = {
   createTour,
   updateTour,
   deleteTour,
+  checkID,
 };
