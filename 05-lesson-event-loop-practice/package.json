@@ -1,0 +1,13 @@
+{
+  "name": "05-lesson-event-loop-practice",
+  "version": "1.0.0",
+  "main": "event-loop.js",
+  "scripts": {
+    "dev": "nodemon modules.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

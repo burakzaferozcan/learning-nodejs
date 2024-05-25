@@ -12,6 +12,7 @@ const tempCard = fs.readFileSync(
   `${__dirname}/temps/template-card.html`,
   "utf-8"
 );
+
 const tempProduct = fs.readFileSync(
   `${__dirname}/temps/template-product.html`,
   "utf-8"
