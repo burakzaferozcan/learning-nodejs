@@ -2,34 +2,58 @@ const express = require("express");
 const app = express();
 const fs = require("fs");
 const port = 3000;
+//! istekleri yönetebilmek için middleware
+app.use(express.json());
+//! istekleri yönetebilmek için middleware
+//? kendi Middlewar'ımızı oluşturalım
+//? bu middleware her istek için geçerlidir çünkü spesifik bir istek belirtmedik
+app.use((req, res, next) => {
+  console.log("hello from the middleware");
+  //todo next() kullanmazsak sonraki satırları çalıştırmaz
+  next();
+  //todo next() kullanmazsak sonraki satırları çalıştırmaz
+});
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
+//? kendi Middlewar'ımızı oluşturalım
+//? bu middleware her istek için geçerlidir çünkü spesifik bir istek belirtmedik
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
-//! istekleri yönetebilmek için middleware
-app.use(express.json());
+
 const getAllTours = (req, res) => {
+  //! middleware
+  console.log(req.requestTime);
   res.status(200).json({
     status: "success",
     results: tours.length,
+    requestedAt: req.requestTime,
     data: {
       tours,
     },
   });
 };
 const getTour = (req, res) => {
+  //! middleware
+  console.log(req.requestTime);
   console.log(req.params);
   const id = Number(req.params.id);
   const tour = tours.find((el) => el.id === id);
   if (!tour) return res.status(404).json({ message: "No tour found" });
   res.status(200).json({
     status: "success",
+    requestedAt: req.requestTime,
     data: {
       tour,
     },
   });
 };
 const createTour = (req, res) => {
+  //! middleware
+  console.log(req.requestTime);
   // console.log(req.body);
   const newId = tours[tours.length - 1].id + 1;
   const newTour = Object.assign({ id: newId }, req.body);
@@ -42,6 +66,7 @@ const createTour = (req, res) => {
       console.log("new tour added");
       res.status(201).send({
         message: "success",
+        requestedAt: req.requestTime,
         data: {
           newTour,
         },
@@ -50,6 +75,8 @@ const createTour = (req, res) => {
   );
 };
 const updateTour = (req, res) => {
+  //! middleware
+  console.log(req.requestTime);
   const id = Number(req.params.id);
   const tour = tours.find((el) => el.id === id);
   const tourIndex = tours.findIndex((el) => el.id === id);
@@ -66,6 +93,7 @@ const updateTour = (req, res) => {
       }
       res.status(200).json({
         status: "success",
+        requestedAt: req.requestTime,
         data: {
           tour: updatedTour,
         },
@@ -74,6 +102,8 @@ const updateTour = (req, res) => {
   );
 };
 const deleteTour = (req, res) => {
+  //! middleware
+  console.log(req.requestTime);
   const id = Number(req.params.id);
   const tour = tours.find((el) => el.id === id);
   const tourIndex = tours.findIndex((el) => el.id === id);
@@ -89,6 +119,7 @@ const deleteTour = (req, res) => {
       }
       res.status(204).json({
         status: "success",
+        requestedAt: req.requestTime,
         data: null,
       });
     }
