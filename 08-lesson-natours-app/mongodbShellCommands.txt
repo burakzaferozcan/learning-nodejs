@@ -1,0 +1,10 @@
+show dbs: komutu : localdeki veritabanlarını gösterir
+use natours-test : natours-test adında bir db oluşturur ve db'ler arasında geçiş yapılmasını sağlar
+
+db.tours.insertOne({name:"the forest hiker",rpice:300,rating:4.7}) : 
+bu komut yoksa tours adında bir collection oluşturur onun altında da bir BSON verisi oluşturur
+
+db.tours.find() : komutu tours collection'ı altındaki verileri bulur
+show collections: komutu veritabanındaki collection'ları gösterir
+
+quit(): komutu mongo shell'den çıkmayı sağlar

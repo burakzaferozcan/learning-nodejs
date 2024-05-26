@@ -5,8 +5,11 @@ const userRouter = require("./routes/userRoutes.js");
 const tourRouter = require("./routes/tourRoutes.js");
 
 //! istekleri yönetebilmek için middleware
-app.use(morgan("dev"));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 app.use(express.json());
+app.use(express.static(`${__dirname}/public`));
 //? kendi Middlewar'ımızı oluşturalım
 //? bu middleware her istek için geçerlidir çünkü spesifik bir istek belirtmedik
 app.use((req, res, next) => {
