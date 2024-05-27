@@ -3,8 +3,23 @@ use natours-test : natours-test adında bir db oluşturur ve db'ler arasında ge
 
 db.tours.insertOne({name:"the forest hiker",rpice:300,rating:4.7}) : 
 bu komut yoksa tours adında bir collection oluşturur onun altında da bir BSON verisi oluşturur
+db.tours.insertMany: birden fazla veri eklemek için kullanılır
+db.tours.insertMany([{name:"the sea explorer",price:497,rating: 4.8},{name:"the snow adventurer",price:"997",rating:4.9 , difficulty:"easy"} ])
 
 db.tours.find() : komutu tours collection'ı altındaki verileri bulur
 show collections: komutu veritabanındaki collection'ları gösterir
 
-quit(): komutu mongo shell'den çıkmayı sağlar
+quit(): komutu mongo shell'den çıkmayı sağlarhe sno
+
+querying : (reading)
+db.tours.find({name:"the forest hiker"})
+db.tours.find({difficulty:"easy"})
+$lte : komutu istenilen değerden düşük veya eşit olan verileri gösterir
+$gte : komutu istenilen değerden büyük veya eşit olan verileri gösterir
+db.tours.find({ price:{$lte:500} })
+$lt: komutu istenilen değerden küçük olan verileri getirir
+$gt: komutu istenilen değerden büyük olan verileri getirir
+ db.tours.find({ price:{$lt:500}, rating:{$gte:4.8} })
+
+
+$or :  db.tours.find({ $or: [{price:{$lt:500}},{rating:{$gte:4.8}}]})
