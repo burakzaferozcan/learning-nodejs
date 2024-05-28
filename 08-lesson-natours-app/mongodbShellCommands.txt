@@ -23,3 +23,10 @@ $gt: komutu istenilen değerden büyük olan verileri getirir
 
 
 $or :  db.tours.find({ $or: [{price:{$lt:500}},{rating:{$gte:4.8}}]})
+
+
+querying : (updating)
+updateOne: db.tours.updateOne({name:"the snow adventurer"},{$set:{price:597}})
+updateMany: db.tours.updateMany({price:{$gt:500},rating:{$gte:4.9}},{$set:{premium:true}}) 
+replaceOne: db.tours.replaceOne
+replaceMany: db.tours.replaceMany
