@@ -30,3 +30,9 @@ updateOne: db.tours.updateOne({name:"the snow adventurer"},{$set:{price:597}})
 updateMany: db.tours.updateMany({price:{$gt:500},rating:{$gte:4.9}},{$set:{premium:true}}) 
 replaceOne: db.tours.replaceOne
 replaceMany: db.tours.replaceMany
+
+querying : (deleting)
+db.tours.deleteOne({rating:{$lt:4.8}}) eşleşen ilk veriyi siler
+db.tours.deleteMany({rating:{$lt:4.8}}) eşleşenleri siler
+db.tours.deleteMany({}) : herşeyi siler
+
