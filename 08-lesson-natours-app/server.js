@@ -22,6 +22,21 @@ const tourSchema = new mongoose.Schema({
   },
 });
 const Tour = mongoose.model("Tour", tourSchema);
+
+const testTour = new Tour({
+  name: "test tour",
+  rating: 4.7,
+  price: 1000,
+});
+testTour
+  .save()
+  .then((doc) => {
+    console.log(doc);
+  })
+  .catch((err) => {
+    console.log("error : ", err);
+  });
+
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`app runing run port ${port}`);
